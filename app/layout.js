@@ -1,7 +1,8 @@
+import './globals.css'
 import { Inter } from 'next/font/google'
 import { AuthContextProvider } from '../context/auth';
-
 const inter = Inter({ subsets: ['latin'] })
+import Navigation from "./components/Navigation"
 
 export const metadata = {
   title: 'Create Next App',
@@ -11,9 +12,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <AuthContextProvider>
-      <html lang="en">
-        <body className={inter.className}>
+      <html lang="en" className='h-full bg-gray-100'>
+        <body suppressHydrationWarning={true} className={`${inter.className} h-full`}>
+          <div class="min-h-full">
+            <Navigation></Navigation>
             {children}
+          </div> 
         </body>
       </html>
     </AuthContextProvider>

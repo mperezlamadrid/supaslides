@@ -1,10 +1,16 @@
-import Link from 'next/link'
-
 export default function Page() {
     return (
         <>
-            <Link href="/">Home</Link>
-            <h1>Tasks Page</h1>
+            <header class="bg-white shadow">
+                <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Tasks</h1>
+                </div>
+            </header>
+            <main>
+                <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+
+                </div>
+            </main>
         </>
     )
 }

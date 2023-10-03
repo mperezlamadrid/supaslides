@@ -1,30 +1,18 @@
 "use client"
-
-import { UserAuth } from "../context/auth"
-import Image from 'next/image'
-import Link from 'next/link'
-
 export default function Home() {
-  const { user, signOut } = UserAuth();
 
   return (
     <>
-      <div>
-        <h1>Home Page</h1>
-
-        <Link href="/products">Products</Link>
-        <br></br>
-        <Link href="/tasks">Tasks</Link>
-        <br></br>
-        <br></br>
-
-        <div>
-          <Image src={user.avatar_url} width={40} height={40} alt="user"/>
-          <h2>Welcome {user.full_name}</h2>
+      <header class="bg-white shadow">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <h1 class="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
         </div>
+      </header>
+      <main>
+        <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
 
-        <button onClick={ signOut }>Sign Out</button>
-      </div>
+        </div>
+      </main>
     </>
   )
 }

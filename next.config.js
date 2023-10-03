@@ -9,7 +9,9 @@ const nextConfig = {
                 pathname: '/**',
             },
         ],
+        domains: ['kanuclezxsxdsqkuzadp.supabase.co', 'tailwindui.com', 'images.unsplash.com'],
     }
 }
 
 module.exports = nextConfig
+
