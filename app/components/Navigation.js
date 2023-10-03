@@ -37,26 +37,23 @@ const Navigation = () => {
                     </button>
 
 
-                    <div class="relative ml-3">
-                    <div>
-                        <button type="button" class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                        <span class="absolute -inset-1.5"></span>
-                        <span class="sr-only">Open user menu</span>
-                        <Image class="h-8 w-8 rounded-full" src={user.avatar_url} alt="" width={100} height={50}/>
-                        </button>
-                    </div>
-
-                    
-                    <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                    
-                        <span className="px-4 py-2 block text-sm text-gray-700 font-bold">Welcome:</span>
-                        <span className="px-4 block text-sm text-gray-700">{user.name}</span>
-                        <span className="px-4 block pb-1 text-sm text-gray-700">{user.email}</span>
-                        
-                        <button type="button" onClick={ signOut } href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</button>
-
-                    </div>
-                    </div>
+                    { Object.keys(user).length > 0 && 
+                        <div class="relative ml-3">
+                            <div>
+                                <button type="button" class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                <span class="absolute -inset-1.5"></span>
+                                <span class="sr-only">Open user menu</span>
+                                <Image class="h-8 w-8 rounded-full" src={user.avatar_url} alt="" width={100} height={50}/>
+                                </button>
+                            </div>
+                            <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                <span className="px-4 py-2 block text-sm text-gray-700 font-bold">Welcome:</span>
+                                <span className="px-4 block text-sm text-gray-700">{user.name}</span>
+                                <span className="px-4 block pb-1 text-sm text-gray-700">{user.email}</span>
+                                <button type="button" onClick={ signOut } href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</button>
+                            </div>
+                        </div>
+                    }
                 </div>
                 </div>
                 <div class="-mr-2 flex md:hidden">
