@@ -9,7 +9,7 @@ const nextConfig = {
                 pathname: '/**',
             },
         ],
-        domains: ['kanuclezxsxdsqkuzadp.supabase.co', 'tailwindui.com', 'images.unsplash.com'],
+        domains: ['kanuclezxsxdsqkuzadp.supabase.co', 'tailwindui.com', 'images.unsplash.com', 'eedqrpjrmjwpmtdwamyq.supabase.co'],
     }
 }
 

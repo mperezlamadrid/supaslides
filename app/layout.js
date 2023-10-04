@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     <AuthContextProvider>
       <html lang="en" className='h-full bg-gray-100'>
         <body suppressHydrationWarning={true} className={`${inter.className} h-full`}>
-          <div class="min-h-full">
+          <div className="min-h-full">
             <Navigation></Navigation>
             {children}
           </div> 
