@@ -17,12 +17,12 @@ export const AuthContextProvider = ({ children }) => {
                 console.log("Session status: ", event);
 
                 if (session == null) {
-                    if (pathname != "/signup") router.replace("/signup")
+                    if (pathname != "/login") router.replace("/login")
                 } else {
                     setUser(session?.user.user_metadata);
                     registerPerson(session?.user);
 
-                    if (pathname == "/signup") router.replace("/")
+                    if (pathname == "/login") router.replace("/")
                 }
             }
         );
