@@ -59,7 +59,7 @@ export const AuthContextProvider = ({ children }) => {
             console.error(`ERROR on person SELECT: ${error}`);
             return error;
         }
-      
+        console.log('IMAGE', user);
         if (person != null) {
             console.info(`Person with email: "${person.email}", exists on person table - aborting registerPerson()`);
             return null;
@@ -70,10 +70,11 @@ export const AuthContextProvider = ({ children }) => {
         const lastName = names.shift();
         
         const { errInsert } = await supabase.from('person')
-          .insert({ id: user.id, firstname: firstName, lastname: lastName, email: user.email});
-      
+        .insert({ id: user.id, firstname: firstName, lastname: lastName, email: user.email, image: user.user_metadata.avatar_url});
+        
         if (errInsert != null) {
-          console.error(`ERROR on person INSERT: ${errInsert}`);
+            console.error(`ERROR on person INSERT: ${errInsert}`);
+            
       
           return errInsert;
         }

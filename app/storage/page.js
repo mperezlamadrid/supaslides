@@ -1,32 +1,19 @@
 'use client'
 import Image from "next/image"
-import { createClient } from "@supabase/supabase-js"
+import { supabase } from "@/lib/supabase"
 import { useState } from "react"
-
 export default function Page() {
-    const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
     const [alertMessage, setAlertMessage] = useState('')
-    const [imgURL, setImgURL] = useState('')
-    const [fileName, setFileName] = useState('')
 
     async function handleInputChange(e) {
         const file = e.target.files[0]
-        const {data, error } = await supabase.storage.from('avatars').upload(`${file.name}`, file)
-        if(error){
+        const {data, error} = await supabase.storage.from('avatars').upload(`avatars/${file.name}`, file)
+        if (error) {
+            setAlertMessage(`this image wasn't uploaded`)
             console.log(error);
-            setAlertMessage(`The image wasn't uploaded`)
         } else {
+            setAlertMessage(`this image was uploaded`)
             console.log(data);
-            setFileName(file.name)
-            setAlertMessage(`The image ${file.name} was uploaded!`)
-        }
-    }
-
-    async function handleClick() {
-        const {data} = await supabase.storage.from('avatars').getPublicUrl(fileName)
-        if (data){
-            console.log(data)
-            setImgURL(data.publicUrl)
         }
     }
 
@@ -48,7 +35,7 @@ export default function Page() {
                             <div className=" col-span-full">
                             <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">Photo</label>
                             <div className="mt-2 flex items-center gap-x-3">
-                                <Image src={imgURL} width={300} height={300} alt={fileName}/>
+                                {/* <Image src={imgURL} width={300} height={300} alt={fileName}/> */}
                             </div>
                             </div>
 
@@ -81,7 +68,7 @@ export default function Page() {
 
                     <div className=" mt-6 flex items-center justify-end gap-x-6">
                         <button type="button" className="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-                        <button onClick={handleClick} type="button" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Load Image</button>
+                        <button type="button" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Load Image</button>
                     </div>
                     </form>
                 </div>
