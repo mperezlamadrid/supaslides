@@ -18,6 +18,8 @@ export default function Page() {
     const [personID, setPersonID] = useState('')
 
     useEffect(() => {
+        
+        // FETCH PERSON DATA
         const getPerson = async () => {
             const {data: people} = await supabase.from('person').select('*')
             setPerson(people)
@@ -26,14 +28,6 @@ export default function Page() {
 
     },[firstName])
 
-    useEffect(() => {
-        const getPerson = async () => {
-            const {data: people} = await supabase.from('person').select('*')
-            setPerson(people)
-        }
-        getPerson()
-
-    },[firstName])
     function emptyPerson() {
         setFirstName('')
         setLastName('')
@@ -42,6 +36,8 @@ export default function Page() {
         setImageURL('')
         setAlertMessage('')
     }
+
+    // INSERT PERSON DATA
     async function addPerson() {
         await supabase.from('person').insert(
             {
@@ -59,6 +55,7 @@ export default function Page() {
         }, 7000);
     }    
 
+    // UPLOAD IMAGE - BUCKET
     async function handleInputChange(e) {
         const file = e.target.files[0]
         const {data, error} = await supabase.storage.from('avatars').upload(`${file.name}`, file)
@@ -69,11 +66,12 @@ export default function Page() {
             setAlertMessage(`This image was uploaded`)
             setImage(file.name)
             console.log(data);
-            loadImage(file.name)
+            getURLImage(file.name)
         }
     }
 
-    async function loadImage(img) {
+    // GET URL IMAGE
+    async function getURLImage(img) {
         const {data, error} = supabase.storage.from('avatars').getPublicUrl(img)
         if (error) {
             console.log(error);
@@ -83,7 +81,8 @@ export default function Page() {
         }
     }
 
-    async function updatePerson(personID) {
+    // FILL PERSON DATA
+    async function fillPersonFields(personID) {
         setContent(true)
         setUpdateBTN(true)
         setPersonID(personID)
@@ -98,6 +97,7 @@ export default function Page() {
         setImageURL(people[0].image)
     }
 
+    // UPDATE PERSON DATA
     async function handleUpdatePerson() {
         await supabase
         .from('person')
@@ -120,7 +120,7 @@ export default function Page() {
         }, 7000);
     }
 
-
+    // DELETE PERSON DATA
     async function deletePerson(id) {
         await supabase
             .from('person')
@@ -128,7 +128,6 @@ export default function Page() {
             .eq('id', id)
         location.reload()
     }
-
 
     return (
         <>  
@@ -255,26 +254,37 @@ export default function Page() {
                                 <div className="p-12 bg-white rounded-xl mb-12">
                                     <h1 className="text-2xl text-[#000]">Person: </h1>
                                     <ul role="list" className="divide-y divide-gray-100">
-                                        {person.map(item => (
+                                        { person.length != 0 ? 
                                             <>
-                                                <li key={item.id} className="flex justify-between gap-x-6 py-5 last:pb-0 ">
-                                                    <div className="flex min-w-0 gap-x-4">
-                                                        <Image className="h-12 w-12 flex-none rounded-full bg-gray-50" src={item.image} alt="" width={50} height={50} />
-                                                        <div className="min-w-0 flex-auto">
-                                                            <p className="text-sm font-semibold leading-6 text-gray-900">{item.firstname} {item.lastname}</p>
-                                                            <p className="mt-1 truncate text-xs leading-5 text-gray-500">{item.email}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                                                        <p className="text-sm leading-6 text-gray-900">{item.role || 'Dev'}</p>
-                                                        <div className="flex flex-row gap-x-2 mt-3">
-                                                            <button onClick={() => {updatePerson(item.id)}} className="text-xs text-blue-300 animate hover:opacity-70">Update</button>
-                                                            <button onClick={()=> {deletePerson(item.id)}} className="text-xs text-red-300 animate hover:opacity-70">Delete</button>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                { person.map(item => (
+                                                    <>
+                                                        <li key={item.id} className="flex justify-between gap-x-6 py-5 last:pb-0 ">
+                                                            <div className="flex min-w-0 gap-x-4">
+                                                            { item.image != '' ? 
+                                                    
+                                                                <Image className="h-12 w-12 flex-none rounded-full bg-gray-50" src={item.image} alt="" width={50} height={50} />
+                                                                :
+                                                                <svg className="h-14 w-14 -ml-1 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                                    <path fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clipRule="evenodd" />
+                                                                </svg>
+                                                            }
+                                                                <div className="min-w-0 flex-auto">
+                                                                    <p className="text-sm font-semibold leading-6 text-gray-900">{item.firstname} {item.lastname}</p>
+                                                                    <p className="mt-1 truncate text-xs leading-5 text-gray-500">{item.email} - {item.image.length != 0 }</p>
+                                                                </div>
+                                                            </div>
+                                                            <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                                                                <p className="text-sm leading-6 text-gray-900">{item.role || 'Dev'}</p>
+                                                                <div className="flex flex-row gap-x-2 mt-3">
+                                                                    <button onClick={() => {fillPersonFields(item.id)}} className="text-xs text-blue-300 animate hover:opacity-70">Update</button>
+                                                                    <button onClick={()=> {deletePerson(item.id)}} className="text-xs text-red-300 animate hover:opacity-70">Delete</button>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </>
+                                                ))}
                                             </>
-                                        ))}
+                                         : <div className="items-center text-sm font-semibold text-gray-700 mt-4 ">There is no registered person yet!</div> }
                                     </ul>
                                 </div>  
                             </div>
