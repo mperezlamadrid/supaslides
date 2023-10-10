@@ -20,8 +20,6 @@ export const AuthContextProvider = ({ children }) => {
                     if (pathname != "/login") router.replace("/login")
                 } else {
                     setUser(session?.user.user_metadata);
-                    // registerPerson(session?.user);
-
                     if (pathname == "/login") router.replace("/")
                 }
             }
@@ -64,44 +62,41 @@ export const UserAuth = () => {
     return useContext(AuthContext);
 };
 
+// registerPerson(session?.user);
 
-
-
-
-//     async function registerPerson(user) {
-//         const { data: person, error } = await supabase.from('person')
-//             .select('email')
-//             .limit(1)
-//             .single()
-//             .eq('email', user.email);
-      
-//         // PGRST116 code = JSON object requested, multiple (or no) rows returned
-//         if (error != null && error.code != "PGRST116") {
-//             console.error(`ERROR on person SELECT: ${error}`);
-//             return error;
-//         }
-//         console.log('IMAGE', user);
-//         if (person != null) {
-//             console.info(`Person with email: "${person.email}", exists on person table - aborting registerPerson()`);
-//             return null;
-//         }
-      
-//         const names = user.user_metadata.name.split(" ", 2);
-//         const firstName = names.shift();
-//         const lastName = names.shift();
-        
-//         const { errInsert } = await supabase.from('person')
-//         .insert({ id: user.id, firstname: firstName, lastname: lastName, email: user.email, image: user.user_metadata.avatar_url});
-        
-//         if (errInsert != null) {
-//             console.error(`ERROR on person INSERT: ${errInsert}`);
-            
-      
-//           return errInsert;
-//         }
-      
-//         console.info(`Added person with id: "${user.id}", to person table`);
-      
+// async function registerPerson(user) {
+//     const { data: person, error } = await supabase.from('person')
+//         .select('email')
+//         .limit(1)
+//         .single()
+//         .eq('email', user.email);
+    
+//     // PGRST116 code = JSON object requested, multiple (or no) rows returned
+//     if (error != null && error.code != "PGRST116") {
+//         console.error(`ERROR on person SELECT: ${error}`);
+//         return error;
+//     }
+//     console.log('IMAGE', user);
+//     if (person != null) {
+//         console.info(`Person with email: "${person.email}", exists on person table - aborting registerPerson()`);
 //         return null;
 //     }
-
+    
+//     const names = user.user_metadata.name.split(" ", 2);
+//     const firstName = names.shift();
+//     const lastName = names.shift();
+    
+//     const { errInsert } = await supabase.from('person')
+//     .insert({ id: user.id, firstname: firstName, lastname: lastName, email: user.email, image: user.user_metadata.avatar_url});
+    
+//     if (errInsert != null) {
+//         console.error(`ERROR on person INSERT: ${errInsert}`);
+        
+    
+//         return errInsert;
+//     }
+    
+//     console.info(`Added person with id: "${user.id}", to person table`);
+    
+//     return null;
+// }
